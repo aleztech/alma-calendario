@@ -189,7 +189,7 @@ function checkPw(){
 </div>
 
 <script>
-const TODAY={y:2026,m:3,d:22};
+const TODAY={y:2026,m:4,d:6};
 const BG={};
 const VISITS={};
 function key(y,m,d){return `${y}-${m}-${d}`;}
@@ -238,8 +238,8 @@ vv(2026,4,8,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora'
 [15,22,29].forEach(d=>vv(2026,4,d,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora'));
 [4,11,18,25].forEach(d=>vv(2026,5,d,'visita','17-19:30','Lunes · 17:00-19:30 · 2,5h · cuidadora'));
 [6,13,20,27].forEach(d=>vv(2026,5,d,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora'));
-[1,8,15].forEach(d=>vv(2026,6,d,'visita','17-19:30','Lunes · 17:00-19:30 · 2,5h · cuidadora'));
-[3,10,17].forEach(d=>vv(2026,6,d,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora'));
+[1,8,15,22,29].forEach(d=>vv(2026,6,d,'visita','17-19:30','Lunes · 17:00-19:30 · 2,5h · cuidadora'));
+[3,10,17,24].forEach(d=>vv(2026,6,d,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora (no lectivo → cuidadora recoge en domicilio)'));
 // Sep-Dic solo Mié (sep 2 = cole cerrado → SIN VISITA)
 [9,16,23,30].forEach(d=>vv(2026,9,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
 [7,14,21,28].forEach(d=>vv(2026,10,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
@@ -291,7 +291,7 @@ const NOTES={
   '2026-3':'Semana Santa desde el 27',
   '2026-4':'Vuelta 7 abr · 2,5h Lun+Mié',
   '2026-5':'Festivos 1-2 may · Lun+Mié',
-  '2026-6':'Fin curso ~19 jun · finde alternos',
+  '2026-6':'Fin curso ~19 jun · visitas hasta 29 jun · finde alternos',
   '2026-7':'Sin visitas · vacaciones mamá',
   '2026-8':'Finde 11-19:30 · sin intersemanal',
   '2026-9':'Cole 8-9 sep · 1er Mié=9 · 1er finde=5-6',
@@ -346,11 +346,11 @@ const MILESTONES=[
   {date:'Feb 1, 2026',icon:'🌱',label:'Primera visita con Alma',detail:'Lunes 17:00–18:00 · 1 hora · el día que empezó todo. Ese día lo cambió todo.',type:'milestone'},
   {date:'Feb 2–25, 2026',icon:'⏱️',label:'8 visitas superadas',detail:'Lunes y miércoles · febrero entero · 8 horas con tu niña',type:'done'},
   {date:'Mar 1, 2026',icon:'📈',label:'¡Subida a 2 horas!',detail:'El juez confía en el proceso · el régimen avanza · más tiempo con ella 💪',type:'milestone'},
-  {date:'Mar 2–22, 2026',icon:'🕐',label:'6 visitas de 2h',detail:'Lunes y miércoles · hasta hoy · ya son 20 horas con Alma 🎯',type:'done'},
+  {date:'Mar 2–25, 2026',icon:'🕐',label:'8 visitas de 2h',detail:'Lunes y miércoles · todo marzo · 16 horas más con Alma 💪',type:'done'},
+  {date:'Mar 27 – Abr 3',icon:'🌿',label:'Semana Santa superada',detail:'Visitas el 30 mar y 1 abr · la madre accedió · no perdiste ni un día 🙌',type:'done'},
+  {date:'Abr 6, 2026',icon:'⬆️',label:'¡Subida a 2,5 horas!',detail:'Hoy empieza el nuevo horario · otro escalón arriba · el régimen no para de crecer 🚀',type:'milestone'},
 ];
 const UPCOMING=[
-  {date:'Mar 27 – Abr 6',icon:'🌿',label:'Semana Santa',detail:'Visita acordada el 30 mar y 1 abr ✉️ · la madre dijo que sí 🙌',type:'soon'},
-  {date:'Abr 7, 2026',icon:'⬆️',label:'¡Subida a 2,5 horas!',detail:'Otro escalón arriba · el régimen no para de crecer 🚀',type:'soon'},
   {date:'Jun 6, 2026',icon:'🌞',label:'Primer finde alterno',detail:'Sábado 6 jun · 11:00–13:00 · ¡el primer fin de semana con Alma! ☀️',type:'soon'},
   {date:'Sep 5, 2026',icon:'🌙',label:'¡Primera pernocta!',detail:'Sáb 11h → Dom 17h · Alma duerme contigo por primera vez 🌙✨ Guárdalo en la memoria.',type:'soon'},
   {date:'Dic 31, 2026',icon:'🎉',label:'Nochevieja y Reyes con Alma',detail:'Fin de año juntos · uvas · Reyes · recuerdos que duran toda la vida 🎆👑',type:'soon'},
@@ -371,9 +371,9 @@ if(mgrid){
 
 const mstats=document.getElementById('ms-stats');
 if(mstats){
-  const totalVisits=14;
-  const totalHours=20;
-  const daysToPernocta=Math.round((new Date(2026,8,5)-new Date(2026,2,22))/(1000*60*60*24));
+  const totalVisits=18;
+  const totalHours=28;
+  const daysToPernocta=Math.round((new Date(2026,8,5)-new Date(2026,3,6))/(1000*60*60*24));
   mstats.innerHTML=
     '<div class="ms-stat"><div class="num">'+totalVisits+'</div><div class="lbl">Visitas con Alma</div><div class="sub">desde el 1 de febrero 💚</div></div>'+
     '<div class="ms-stat"><div class="num">'+totalHours+'h</div><div class="lbl">Horas con tu niña</div><div class="sub">y contando… 💛</div></div>'+
