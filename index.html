@@ -204,8 +204,8 @@ function bgR(y,m1,d1,m2,d2,type,label,who){
 bg(2026,1,1,'festivo','Año Nuevo');bg(2026,1,6,'festivo','Reyes Magos');
 bg(2026,3,21,'festivo','Constitución de Tres Cantos');
 bg(2026,4,2,'festivo','Jueves Santo');bg(2026,4,3,'festivo','Viernes Santo');
-bg(2026,4,15,'festivo','Festivo Tres Cantos');
 bg(2026,5,1,'festivo','Día del Trabajo');bg(2026,5,2,'festivo','Día Comunidad de Madrid');
+bg(2026,5,15,'festivo','San Isidro');
 bg(2026,6,24,'festivo','San Juan · Tres Cantos');
 bg(2026,8,15,'festivo','Asunción de la Virgen');bg(2026,10,12,'festivo','Fiesta Nacional');
 bg(2026,11,2,'festivo','Traslado Todos los Santos');
@@ -236,8 +236,7 @@ vv(2026,4,1,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora 
 vv(2026,4,6,'visita','17-19:30','Lunes · 17:00-19:30 · 2,5h · cuidadora');
 vv(2026,4,8,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora');
 [13,20,27].forEach(d=>vv(2026,4,d,'visita','17-19:30','Lunes · 17:00-19:30 · 2,5h · cuidadora'));
-vv(2026,4,15,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · FESTIVO → cuidadora recoge en domicilio materno');
-[22,29].forEach(d=>vv(2026,4,d,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora'));
+[15,22,29].forEach(d=>vv(2026,4,d,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora'));
 [4,11,18,25].forEach(d=>vv(2026,5,d,'visita','17-19:30','Lunes · 17:00-19:30 · 2,5h · cuidadora'));
 [6,13,20,27].forEach(d=>vv(2026,5,d,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora'));
 [1,8,15,22,29].forEach(d=>vv(2026,6,d,'visita','17-19:30','Lunes · 17:00-19:30 · 2,5h · cuidadora'));
@@ -291,8 +290,8 @@ vv(2026,12,13,'visita-pernocta','→Dom 17h','Domingo · entrega 17:00 · cuidad
 const MN=['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const NOTES={
   '2026-3':'Semana Santa desde el 27',
-  '2026-4':'Vuelta 7 abr · 2,5h Lun+Mié · Festivo 15',
-  '2026-5':'Festivos 1-2 may · Lun+Mié',
+  '2026-4':'Vuelta 7 abr · 2,5h Lun+Mié',
+  '2026-5':'Festivos 1-2-15 may · Lun+Mié',
   '2026-6':'Fin curso ~19 jun · visitas hasta 29 jun · finde alternos',
   '2026-7':'Sin visitas · vacaciones mamá',
   '2026-8':'Finde 11-19:30 · sin intersemanal',
