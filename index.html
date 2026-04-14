@@ -68,7 +68,7 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;letter-spacing:-.5px;}
 document.getElementById('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw();});
 function checkPw(){
   const val=document.getElementById('pw-input').value;
-  const roles={'!S4ndr012051981':'full','Alma2627':'full','Alma2021.':'calendar'};
+  const roles={'Alma2627':'full','Alma2021.':'calendar'};
   const role=roles[val];
   if(role){
     document.getElementById('pw-overlay').style.display='none';
@@ -90,9 +90,9 @@ function checkPw(){
 <div class="page">
 
 <header>
-  <span class="tag">Humanitas · Tres Cantos · Sentencia 1/2026</span>
+  <span class="tag">Humanitas · Tres Cantos · 2026</span>
   <h1>Calendario de Alma 2026–2027 👧</h1>
-  <p class="subtitle">Festivos Tres Cantos · calendario escolar · régimen de visitas judicial · periodos vacacionales</p>
+  <p class="subtitle">Festivos Tres Cantos · calendario escolar · régimen de visitas · periodos vacacionales</p>
 </header>
 
 <div class="legend">
@@ -121,7 +121,7 @@ function checkPw(){
 </div>
 
 <div class="summary">
-  <h2>📋 Tu hoja de ruta con Alma · Sentencia 1/2026 💛</h2>
+  <h2>📋 Tu hoja de ruta con Alma 💛</h2>
   <div class="ph">Mar – Jun · Intersemanal Lun + Mié</div>
   <div class="sr" style="background:#f0fdf4;border:1px solid #bbf7d0">
     <span class="date">Lun y Mié</span>
@@ -178,18 +178,16 @@ function checkPw(){
     <span class="detail">Desde salida cole → 19:30 · cuidadora lleva a domicilio materno</span>
     <span class="badge" style="background:#22c55e;color:#fff">INTERSEMANAL</span>
   </div>
-  <div class="info-box">📌 <strong>Notas sentencia:</strong> Si cualquier día de visita no es lectivo, la cuidadora recoge en el domicilio materno en el mismo horario. · Durante periodos vacacionales (Semana Santa, Verano, Navidad) quedan suspendidas visitas intersemanales y fines de semana alternos. · Entregas mediante cuidadora cesan cuando cesen las medidas cautelares de prohibición.</div>
+  <div class="info-box">📌 <strong>Notas:</strong> Si cualquier día de visita no es lectivo, la cuidadora recoge en el domicilio materno en el mismo horario. · Durante periodos vacacionales (Semana Santa, Verano, Navidad) quedan suspendidas visitas intersemanales y fines de semana alternos. · Entregas mediante cuidadora cesan cuando cesen las medidas cautelares de prohibición.</div>
 </div>
 
 <footer>
-  Sentencia nº 1/2026 · Tribunal de Instancia de Colmenar Viejo, Plaza nº 4<br>
-  Festivos: nacionales + Comunidad de Madrid + Tres Cantos (21 mar · 24 jun) · Calendario escolar Madrid 2025-26<br>
-  Documento orientativo. Consulta con tu abogado ante cualquier duda de interpretación.
+  Festivos: nacionales + Comunidad de Madrid + Tres Cantos (21 mar · 24 jun) · Calendario escolar Madrid 2025-26
 </footer>
 </div>
 
 <script>
-const TODAY={y:2026,m:4,d:13};
+const _now=new Date();const TODAY={y:_now.getFullYear(),m:_now.getMonth()+1,d:_now.getDate()};
 const BG={};
 const VISITS={};
 function key(y,m,d){return `${y}-${m}-${d}`;}
@@ -362,23 +360,47 @@ const cardColors={done:'ms-card done',milestone:'ms-card milestone',soon:'ms-car
 const mgrid=document.getElementById('milestone-grid');
 if(mgrid){
   const allCards=[...MILESTONES,...UPCOMING];
+  // Auto-determine done/upcoming based on today
+  const todayMs=new Date(TODAY.y,TODAY.m-1,TODAY.d).getTime();
   mgrid.innerHTML=allCards.map(m=>{
-    const cls=cardColors[m.type]||'ms-card';
-    const opacity=m.type==='soon'?'opacity:.5;':'';
-    const prefix=m.type==='soon'?'PRÓXIMO · ':'✅ SUPERADO · ';
+    const isPast=m.type==='done'||m.type==='milestone';
+    const cls=isPast?cardColors[m.type]||'ms-card':'ms-card';
+    const opacity=!isPast?'opacity:.5;':'';
+    const prefix=!isPast?'PRÓXIMO · ':'✅ SUPERADO · ';
     return '<div class="'+cls+'" style="'+opacity+'"><span class="ms-icon">'+m.icon+'</span><div class="ms-content"><div class="ms-date">'+prefix+m.date+'</div><div class="ms-label">'+m.label+'</div><div class="ms-detail">'+m.detail+'</div></div></div>';
   }).join('');
 }
 
 const mstats=document.getElementById('ms-stats');
 if(mstats){
-  const totalVisits=18;
-  const totalHours=28;
-  const daysToPernocta=Math.round((new Date(2026,8,5)-new Date(2026,3,6))/(1000*60*60*24));
+  // Auto-calculate visits and hours up to today
+  const todayDate=new Date(TODAY.y,TODAY.m-1,TODAY.d);
+  let totalVisits=0,totalHours=0;
+  // Count all visit entries up to today
+  Object.keys(VISITS).forEach(k=>{
+    const[vy,vm,vd]=k.split('-').map(Number);
+    const vDate=new Date(vy,vm-1,vd);
+    if(vDate<=todayDate){
+      totalVisits++;
+      const v=VISITS[k];
+      if(v.sched){
+        if(v.sched.includes('2,5h')||v.sched==='17-19:30') totalHours+=2.5;
+        else if(v.sched.includes('2h')||v.sched==='17-19h') totalHours+=2;
+        else if(v.sched.includes('1h')) totalHours+=1;
+        else if(v.sched==='11-13h') totalHours+=2;
+        else if(v.sched==='11-19:30') totalHours+=8.5;
+        else if(v.sched==='cole→19:30') totalHours+=3.5;
+        else if(v.sched.includes('11h→')||v.sched.includes('→Dom')) totalHours+=15;
+      }
+    }
+  });
+  const daysToPernocta=Math.max(0,Math.round((new Date(2026,8,5)-todayDate)/(1000*60*60*24)));
+  const pernoctalbl=daysToPernocta>0?daysToPernocta:'🎉';
+  const pernoctasub=daysToPernocta>0?'sep 5 · la noche que más esperas 🌙':'¡ya llegó! 🌙';
   mstats.innerHTML=
     '<div class="ms-stat"><div class="num">'+totalVisits+'</div><div class="lbl">Visitas con Alma</div><div class="sub">desde el 1 de febrero 💚</div></div>'+
-    '<div class="ms-stat"><div class="num">'+totalHours+'h</div><div class="lbl">Horas con tu niña</div><div class="sub">y contando… 💛</div></div>'+
-    '<div class="ms-stat"><div class="num">'+daysToPernocta+'</div><div class="lbl">Días hasta la primera pernocta</div><div class="sub">sep 5 · la noche que más esperas 🌙</div></div>'+
+    '<div class="ms-stat"><div class="num">'+Math.round(totalHours)+'h</div><div class="lbl">Horas con tu niña</div><div class="sub">y contando… 💛</div></div>'+
+    '<div class="ms-stat"><div class="num">'+pernoctalbl+'</div><div class="lbl">Días hasta la primera pernocta</div><div class="sub">'+pernoctasub+'</div></div>'+
     '<div class="ms-stat"><div class="num">2027</div><div class="lbl">El año que lo cambia todo</div><div class="sub">fines de semana Vie–Dom · la meta 🏠</div></div>';
 }
 
