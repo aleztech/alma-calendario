@@ -341,32 +341,29 @@ const MONTHS=[[2026,3],[2026,4],[2026,5],[2026,6],[2026,7],[2026,8],[2026,9],[20
 container.innerHTML=MONTHS.map(([y,m])=>renderMonth(y,m)).join('');
 
 // ═══════ MILESTONES ═══════
-const MILESTONES=[
-  {date:'Feb 1, 2026',icon:'🌱',label:'Primera visita con Alma',detail:'Lunes 17:00–18:00 · 1 hora · el día que empezó todo. Ese día lo cambió todo.',type:'milestone'},
-  {date:'Feb 2–25, 2026',icon:'⏱️',label:'8 visitas superadas',detail:'Lunes y miércoles · febrero entero · 8 horas con tu niña',type:'done'},
-  {date:'Mar 1, 2026',icon:'📈',label:'¡Subida a 2 horas!',detail:'El juez confía en el proceso · el régimen avanza · más tiempo con ella 💪',type:'milestone'},
-  {date:'Mar 2–25, 2026',icon:'🕐',label:'8 visitas de 2h',detail:'Lunes y miércoles · todo marzo · 16 horas más con Alma 💪',type:'done'},
-  {date:'Mar 27 – Abr 3',icon:'🌿',label:'Semana Santa superada',detail:'Visitas el 30 mar y 1 abr · la madre accedió · no perdiste ni un día 🙌',type:'done'},
-  {date:'Abr 6, 2026',icon:'⬆️',label:'¡Subida a 2,5 horas!',detail:'Hoy empieza el nuevo horario · otro escalón arriba · el régimen no para de crecer 🚀',type:'milestone'},
-];
-const UPCOMING=[
-  {date:'Jun 6, 2026',icon:'🌞',label:'Primer finde alterno',detail:'Sábado 6 jun · 11:00–13:00 · ¡el primer fin de semana con Alma! ☀️',type:'soon'},
-  {date:'Sep 5, 2026',icon:'🌙',label:'¡Primera pernocta!',detail:'Sáb 11h → Dom 17h · Alma duerme contigo por primera vez 🌙✨ Guárdalo en la memoria.',type:'soon'},
-  {date:'Dic 31, 2026',icon:'🎉',label:'Nochevieja y Reyes con Alma',detail:'Fin de año juntos · uvas · Reyes · recuerdos que duran toda la vida 🎆👑',type:'soon'},
-  {date:'Feb 2027',icon:'🏠',label:'¡Régimen ordinario!',detail:'Viernes tarde → Domingo 19:30 · la meta · cuando lleguéis aquí ya seréis inseparables 🏡💛',type:'soon'},
+// All milestones with parseable end date for auto done/upcoming calculation
+const ALL_MILESTONES=[
+  {date:'Feb 1, 2026',endDate:[2026,2,1],icon:'🌱',label:'Primera visita con Alma',detail:'Lunes 17:00–18:00 · 1 hora · el día que empezó todo. Ese día lo cambió todo.',highlight:true},
+  {date:'Feb 2–25, 2026',endDate:[2026,2,25],icon:'⏱️',label:'8 visitas superadas',detail:'Lunes y miércoles · febrero entero · 8 horas con tu niña'},
+  {date:'Mar 1, 2026',endDate:[2026,3,1],icon:'📈',label:'¡Subida a 2 horas!',detail:'El régimen avanza · más tiempo con ella 💪',highlight:true},
+  {date:'Mar 2–25, 2026',endDate:[2026,3,25],icon:'🕐',label:'8 visitas de 2h',detail:'Lunes y miércoles · todo marzo · 16 horas más con Alma 💪'},
+  {date:'Mar 27 – Abr 3',endDate:[2026,4,3],icon:'🌿',label:'Semana Santa superada',detail:'Visitas el 30 mar y 1 abr · la madre accedió · no perdiste ni un día 🙌'},
+  {date:'Abr 6, 2026',endDate:[2026,4,6],icon:'⬆️',label:'¡Subida a 2,5 horas!',detail:'Nuevo horario · otro escalón arriba · el régimen no para de crecer 🚀',highlight:true},
+  {date:'Jun 6, 2026',endDate:[2026,6,7],icon:'🌞',label:'Primer finde alterno',detail:'Sábado 6 jun · 11:00–13:00 · ¡el primer fin de semana con Alma! ☀️'},
+  {date:'Sep 5, 2026',endDate:[2026,9,6],icon:'🌙',label:'¡Primera pernocta!',detail:'Sáb 11h → Dom 17h · Alma duerme contigo por primera vez 🌙✨ Guárdalo en la memoria.',highlight:true},
+  {date:'Dic 31, 2026',endDate:[2027,1,7],icon:'🎉',label:'Nochevieja y Reyes con Alma',detail:'Fin de año juntos · uvas · Reyes · recuerdos que duran toda la vida 🎆👑'},
+  {date:'Feb 2027',endDate:[2027,2,1],icon:'🏠',label:'¡Régimen ordinario!',detail:'Viernes tarde → Domingo 19:30 · la meta · cuando lleguéis aquí ya seréis inseparables 🏡💛',highlight:true},
 ];
 
-const cardColors={done:'ms-card done',milestone:'ms-card milestone',soon:'ms-card'};
 const mgrid=document.getElementById('milestone-grid');
 if(mgrid){
-  const allCards=[...MILESTONES,...UPCOMING];
-  // Auto-determine done/upcoming based on today
-  const todayMs=new Date(TODAY.y,TODAY.m-1,TODAY.d).getTime();
-  mgrid.innerHTML=allCards.map(m=>{
-    const isPast=m.type==='done'||m.type==='milestone';
-    const cls=isPast?cardColors[m.type]||'ms-card':'ms-card';
-    const opacity=!isPast?'opacity:.5;':'';
-    const prefix=!isPast?'PRÓXIMO · ':'✅ SUPERADO · ';
+  const todayDate=new Date(TODAY.y,TODAY.m-1,TODAY.d);
+  mgrid.innerHTML=ALL_MILESTONES.map(m=>{
+    const mDate=new Date(m.endDate[0],m.endDate[1]-1,m.endDate[2]);
+    const isPast=todayDate>=mDate;
+    const cls=isPast?(m.highlight?'ms-card milestone':'ms-card done'):'ms-card';
+    const opacity=isPast?'':'opacity:.5;';
+    const prefix=isPast?'✅ SUPERADO · ':'PRÓXIMO · ';
     return '<div class="'+cls+'" style="'+opacity+'"><span class="ms-icon">'+m.icon+'</span><div class="ms-content"><div class="ms-date">'+prefix+m.date+'</div><div class="ms-label">'+m.label+'</div><div class="ms-detail">'+m.detail+'</div></div></div>';
   }).join('');
 }
