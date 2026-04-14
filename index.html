@@ -37,6 +37,12 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;letter-spacing:-.5px;}
 .sr .detail{flex:1;color:#475569;}
 .badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:6px;white-space:nowrap;}
 .info-box{background:#eff6ff;border:1px solid #bfdbfe;border-radius:9px;padding:11px 14px;font-size:12px;color:#1e40af;margin-top:11px;line-height:1.6;}
+.phase-now{position:relative;border:2.5px solid #6366f1!important;border-radius:10px;box-shadow:0 0 0 3px rgba(99,102,241,.15);}
+.phase-now::before{content:'📍 ESTÁS AQUÍ';position:absolute;top:-11px;left:14px;background:#6366f1;color:#fff;font-size:9px;font-weight:800;letter-spacing:1px;padding:2px 10px;border-radius:6px;}
+.phase-past .sr{opacity:.45;}
+.phase-past .ph{opacity:.45;}
+.phase-future .sr{opacity:.6;}
+.phase-future .ph{opacity:.6;}
 .milestones{margin-bottom:24px;}.ms-header{text-align:center;margin-bottom:22px;padding:28px 20px 20px;background:linear-gradient(135deg,#fdf4ff 0%,#eff6ff 100%);border-radius:16px;border:1px solid #e9d5ff;}.ms-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;display:block;margin-bottom:8px;}.ms-title{font-family:"DM Serif Display",serif;font-size:24px;color:#1e293b;margin-bottom:6px;}.ms-sub{font-size:13px;color:#64748b;}.ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:16px;}.ms-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;transition:transform .15s;}.ms-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08);}.ms-card.done{border-color:#059669;background:linear-gradient(135deg,#065f46,#047857);color:#fff;box-shadow:0 3px 10px rgba(5,150,105,.3);}.ms-card.milestone{border-color:#7c3aed;background:linear-gradient(135deg,#4c1d95,#6d28d9);color:#fff;box-shadow:0 3px 10px rgba(109,40,217,.3);}.ms-icon{font-size:24px;line-height:1;margin-top:2px;}.ms-content{flex:1;}.ms-date{font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:.5px;text-transform:uppercase;}.ms-card.done .ms-date,.ms-card.milestone .ms-date{color:rgba(255,255,255,.7);}.ms-card.done .ms-label,.ms-card.milestone .ms-label{color:#fff;}.ms-card.done .ms-detail,.ms-card.milestone .ms-detail{color:rgba(255,255,255,.8);}.ms-label{font-size:13px;font-weight:600;color:#1e293b;margin:2px 0;line-height:1.3;}.ms-detail{font-size:11px;color:#64748b;}.ms-stats{display:flex;gap:12px;flex-wrap:wrap;}.ms-stat{flex:1;min-width:130px;background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:12px;padding:14px 16px;text-align:center;}.ms-stat .num{font-family:"DM Sans",sans-serif;font-size:32px;font-weight:800;color:#1d4ed8;letter-spacing:-1.5px;}.ms-stat .lbl{font-size:11px;color:#64748b;margin-top:2px;}.ms-stat .sub{font-size:10px;color:#94a3b8;}footer{margin-top:28px;font-size:11px;color:#94a3b8;text-align:center;line-height:1.8;}
 @media(max-width:600px){.months-grid{grid-template-columns:1fr;}h1{font-size:22px;}}
 </style>
@@ -122,62 +128,7 @@ function checkPw(){
 
 <div class="summary">
   <h2>📋 Tu hoja de ruta con Alma 💛</h2>
-  <div class="ph">Mar – Jun · Intersemanal Lun + Mié</div>
-  <div class="sr" style="background:#f0fdf4;border:1px solid #bbf7d0">
-    <span class="date">Lun y Mié</span>
-    <span class="detail">Mar: 17:00–19:00 (2h) · Abr en adelante: 17:00–19:30 (2,5h) · cuidadora lleva a domicilio materno</span>
-    <span class="badge" style="background:#22c55e;color:#fff">INTERSEMANAL</span>
-  </div>
-  <div class="ph">Jun 1 – ~Jun 19 · + Fines de semana alternos</div>
-  <div class="sr" style="background:#eff6ff;border:1px solid #bfdbfe">
-    <span class="date">Sáb-Dom alternos</span>
-    <span class="detail">11:00–13:00 · sin pernocta · 1er finde: 6-7 jun · cuidadora recoge y entrega</span>
-    <span class="badge" style="background:#3b82f6;color:#fff">FINDE ALTERNO</span>
-  </div>
-  <div class="ph">Jul · Sin visitas (vacaciones madre con Alma)</div>
-  <div class="sr" style="background:#fef9c3;border:1px solid #fde68a">
-    <span class="date">Todo julio</span><span class="detail">Sin visitas — mes de vacaciones de la madre con Alma</span>
-    <span class="badge" style="background:#d97706;color:#fff">SIN VISITAS</span>
-  </div>
-  <div class="ph">Ago · Fines alternos sin pernocta (sin intersemanal)</div>
-  <div class="sr" style="background:#eff6ff;border:1px solid #bfdbfe">
-    <span class="date">Sáb-Dom alternos</span>
-    <span class="detail">11:00–19:30 · sin pernocta · 1er finde: 1-2 ago · cuidadora</span>
-    <span class="badge" style="background:#3b82f6;color:#fff">FINDE ALTERNO</span>
-  </div>
-  <div class="ph">Sep – Dic/Ene · Miércoles + Fines alternos con pernocta</div>
-  <div class="sr" style="background:#f0fdf4;border:1px solid #bbf7d0">
-    <span class="date">Miércoles</span>
-    <span class="detail">Desde salida cole → 19:30 · ⚠ Sep 2 NO tiene visita (cole abre 8-9 sep) · 1er Mié: 9 sep</span>
-    <span class="badge" style="background:#22c55e;color:#fff">INTERSEMANAL</span>
-  </div>
-  <div class="sr" style="background:#dbeafe;border:1px solid #93c5fd">
-    <span class="date">Sáb-Dom alternos</span>
-    <span class="detail">Sábado 11:00 → Domingo 17:00 · PERNOCTA · 1er finde: 5-6 sep · cuidadora</span>
-    <span class="badge" style="background:#1d4ed8;color:#fff">CON PERNOCTA</span>
-  </div>
-  <div class="ph">Navidad 2026-2027 · Madre elige (año par 2026)</div>
-  <div class="sr" style="background:#fef9c3;border:1px solid #fde68a">
-    <span class="date">~20 dic → 31 dic 12h</span>
-    <span class="detail">Periodo 1 — con mamá · visitas intersemanal y fines de semana suspendidos</span>
-    <span class="badge" style="background:#d97706;color:#fff">CON MAMÁ</span>
-  </div>
-  <div class="sr" style="background:#f0fdf4;border:1px solid #1d4ed8">
-    <span class="date">31 dic 12h → ~7 ene</span>
-    <span class="detail">Periodo 2 — con papá · cuidadora recoge el 31 dic a las 12:00 · incluye el 8 ene si cole abre ese día · finde 9-10 ene con papá</span>
-    <span class="badge" style="background:#1d4ed8;color:#fff">CON PAPÁ</span>
-  </div>
-  <div class="ph">Feb 2027 · Nuevo régimen ordinario</div>
-  <div class="sr" style="background:#f0fdf4;border:1px solid #bbf7d0">
-    <span class="date">Vie (salida cole) → Dom 19:30</span>
-    <span class="detail">Fines de semana alternos · cuidadora entrega a las 19:30 el domingo</span>
-    <span class="badge" style="background:#22c55e;color:#fff">NUEVO RÉGIMEN</span>
-  </div>
-  <div class="sr" style="background:#f0fdf4;border:1px solid #bbf7d0">
-    <span class="date">Miércoles</span>
-    <span class="detail">Desde salida cole → 19:30 · cuidadora lleva a domicilio materno</span>
-    <span class="badge" style="background:#22c55e;color:#fff">INTERSEMANAL</span>
-  </div>
+  <div id="roadmap"></div>
   <div class="info-box">📌 <strong>Notas:</strong> Si cualquier día de visita no es lectivo, la cuidadora recoge en el domicilio materno en el mismo horario. · Durante periodos vacacionales (Semana Santa, Verano, Navidad) quedan suspendidas visitas intersemanales y fines de semana alternos. · Entregas mediante cuidadora cesan cuando cesen las medidas cautelares de prohibición.</div>
 </div>
 
@@ -399,6 +350,58 @@ if(mstats){
     '<div class="ms-stat"><div class="num">'+Math.round(totalHours)+'h</div><div class="lbl">Horas con tu niña</div><div class="sub">y contando… 💛</div></div>'+
     '<div class="ms-stat"><div class="num">'+pernoctalbl+'</div><div class="lbl">Días hasta la primera pernocta</div><div class="sub">'+pernoctasub+'</div></div>'+
     '<div class="ms-stat"><div class="num">2027</div><div class="lbl">El año que lo cambia todo</div><div class="sub">fines de semana Vie–Dom · la meta 🏠</div></div>';
+}
+
+// ═══════ ROADMAP (auto-highlights current phase) ═══════
+const roadmapEl=document.getElementById('roadmap');
+if(roadmapEl){
+  const td=new Date(TODAY.y,TODAY.m-1,TODAY.d);
+  const phases=[
+    {start:[2026,3,1],end:[2026,5,31],ph:'Mar – May · Intersemanal Lun + Mié',rows:[
+      {date:'Lun y Mié',detail:'Mar: 17:00–19:00 (2h) · Abr en adelante: 17:00–19:30 (2,5h) · cuidadora lleva a domicilio materno',badge:'INTERSEMANAL',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+    ]},
+    {start:[2026,6,1],end:[2026,6,19],ph:'Jun 1 – ~Jun 19 · + Fines de semana alternos',rows:[
+      {date:'Lun y Mié',detail:'17:00–19:30 (2,5h) · cuidadora',badge:'INTERSEMANAL',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+      {date:'Sáb-Dom alternos',detail:'11:00–13:00 · sin pernocta · 1er finde: 6-7 jun · cuidadora recoge y entrega',badge:'FINDE ALTERNO',bg:'#eff6ff',bc:'#bfdbfe',bb:'#3b82f6'},
+    ]},
+    {start:[2026,7,1],end:[2026,7,31],ph:'Jul · Sin visitas (vacaciones madre con Alma)',rows:[
+      {date:'Todo julio',detail:'Sin visitas — mes de vacaciones de la madre con Alma',badge:'SIN VISITAS',bg:'#fef9c3',bc:'#fde68a',bb:'#d97706'},
+    ]},
+    {start:[2026,8,1],end:[2026,8,31],ph:'Ago · Fines alternos sin pernocta (sin intersemanal)',rows:[
+      {date:'Sáb-Dom alternos',detail:'11:00–19:30 · sin pernocta · 1er finde: 1-2 ago · cuidadora',badge:'FINDE ALTERNO',bg:'#eff6ff',bc:'#bfdbfe',bb:'#3b82f6'},
+    ]},
+    {start:[2026,9,1],end:[2026,12,19],ph:'Sep – Dic · Miércoles + Fines alternos con pernocta',rows:[
+      {date:'Miércoles',detail:'Desde salida cole → 19:30 · ⚠ Sep 2 NO tiene visita (cole abre 8-9 sep) · 1er Mié: 9 sep',badge:'INTERSEMANAL',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+      {date:'Sáb-Dom alternos',detail:'Sábado 11:00 → Domingo 17:00 · PERNOCTA · 1er finde: 5-6 sep · cuidadora',badge:'CON PERNOCTA',bg:'#dbeafe',bc:'#93c5fd',bb:'#1d4ed8'},
+    ]},
+    {start:[2026,12,20],end:[2027,1,8],ph:'Navidad 2026-2027 · Madre elige (año par 2026)',rows:[
+      {date:'~20 dic → 31 dic 12h',detail:'Periodo 1 — con mamá · visitas intersemanal y fines de semana suspendidos',badge:'CON MAMÁ',bg:'#fef9c3',bc:'#fde68a',bb:'#d97706'},
+      {date:'31 dic 12h → ~7 ene',detail:'Periodo 2 — con papá · cuidadora recoge el 31 dic a las 12:00 · incluye el 8 ene si cole abre ese día · finde 9-10 ene con papá',badge:'CON PAPÁ',bg:'#f0fdf4',bc:'#1d4ed8',bb:'#1d4ed8'},
+    ]},
+    {start:[2027,2,1],end:[2027,12,31],ph:'Feb 2027 · Nuevo régimen ordinario',rows:[
+      {date:'Vie (salida cole) → Dom 19:30',detail:'Fines de semana alternos · cuidadora entrega a las 19:30 el domingo',badge:'NUEVO RÉGIMEN',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+      {date:'Miércoles',detail:'Desde salida cole → 19:30 · cuidadora lleva a domicilio materno',badge:'INTERSEMANAL',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+    ]},
+  ];
+  let html='';
+  phases.forEach(p=>{
+    const s=new Date(p.start[0],p.start[1]-1,p.start[2]);
+    const e=new Date(p.end[0],p.end[1]-1,p.end[2]);
+    const isCurrent=td>=s&&td<=e;
+    const isPast=td>e;
+    const cls=isCurrent?'phase-now':isPast?'phase-past':'phase-future';
+    html+='<div class="'+cls+'">';
+    html+='<div class="ph">'+p.ph+'</div>';
+    p.rows.forEach(r=>{
+      html+='<div class="sr" style="background:'+r.bg+';border:1px solid '+r.bc+'">';
+      html+='<span class="date">'+r.date+'</span>';
+      html+='<span class="detail">'+r.detail+'</span>';
+      html+='<span class="badge" style="background:'+r.bb+';color:#fff">'+r.badge+'</span>';
+      html+='</div>';
+    });
+    html+='</div>';
+  });
+  roadmapEl.innerHTML=html;
 }
 
 </script>
