@@ -133,7 +133,7 @@ function checkPw(){
 </div>
 
 <footer>
-  Festivos: nacionales + Comunidad de Madrid + Tres Cantos (21 mar · 24 jun) · Calendario escolar Madrid 2025-26
+  Festivos: nacionales + Comunidad de Madrid + Tres Cantos (21 mar · 24 jun) · Calendario escolar Madrid 2026-27 (Orden 2034/2026 BOCM) · curso 2027-28 pendiente de publicar
 </footer>
 </div>
 
@@ -173,9 +173,21 @@ bg(2026,4,1,'vacacion','Mié Santo · no lectivo · NO festivo');
 bgR(2026,6,19,8,31,'vacacion','Vacaciones con mamá ☀️','MAMÁ');
 bgR(2026,9,1,9,7,'vacacion','Pre-vuelta al cole','MAMÁ');
 
-// NAVIDAD 2026-2027
-bgR(2026,12,20,12,31,'vacacion','Navidad · Periodo 1 · con mamá','MAMÁ');
-bgR(2027,1,1,1,8,'vacacion','Navidad · Periodo 2 · con papá','PAPÁ');
+// NAVIDAD 2026-2027 · corregido con calendario oficial del colegio (Humanitas Tres Cantos) y Orden 2034/2026 BOCM:
+// último día lectivo 22 dic, no lectivo 23 dic-10 ene, vuelta 11 ene
+bgR(2026,12,23,12,31,'vacacion','Navidad · Periodo 1 · con mamá','MAMÁ');
+bgR(2027,1,1,1,10,'vacacion','Navidad · Periodo 2 · con papá','PAPÁ');
+
+// SEMANA SANTA 2027 · periodo 1 mamá / periodo 2 papá (medidas cautelares vigentes)
+// Orden 2034/2026 BOCM 4-jun-2026 (calendario escolar Madrid 2026-27): no lectivo 19-29 mar, miércoles santo 24 mar
+bgR(2027,3,19,3,24,'vacacion','Semana Santa · Periodo 1 · con mamá','MAMÁ');
+bgR(2027,3,25,3,29,'vacacion','Semana Santa · Periodo 2 · con papá','PAPÁ');
+
+// VERANO 2027 · 4 periodos quincenales, mamá 1º y 3º / papá 2º y 4º (medidas cautelares vigentes)
+bgR(2027,7,1,7,15,'vacacion','Verano · Periodo 1 · con mamá','MAMÁ');
+bgR(2027,7,16,8,1,'vacacion','Verano · Periodo 2 · con papá','PAPÁ');
+bgR(2027,8,2,8,15,'vacacion','Verano · Periodo 3 · con mamá','MAMÁ');
+bgR(2027,8,16,9,1,'vacacion','Verano · Periodo 4 · con papá','PAPÁ');
 
 // VISITAS INTERSEMANAL
 vv(2026,3,30,'visita','17-19h','Lunes · 17:00-19:00 · 2h · cuidadora (SS acordada con madre)');
@@ -197,6 +209,21 @@ vv(2026,4,8,'visita','17-19:30','Miércoles · 17:00-19:30 · 2,5h · cuidadora'
 [2,9,16].forEach(d=>vv(2026,12,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
 // Ene 2027 (cole vuelve ~8 ene, 1er Mié lectivo = 14)
 [13,20,27].forEach(d=>vv(2027,1,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+
+// Feb-Dic 2027 · régimen ordinario (sentencia 2ª.A.7) · miércoles, salida cole → 19:30
+[3,10,17,24].forEach(d=>vv(2027,2,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+[3,10,17,31].forEach(d=>vv(2027,3,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+// 24 mar = miércoles santo, ya cubierto por el bloque de Semana Santa
+[7,14,21,28].forEach(d=>vv(2027,4,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+[5,12,19,26].forEach(d=>vv(2027,5,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+[2,9,16,23,30].forEach(d=>vv(2027,6,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+// Jul-Ago: sin miércoles suelto, cubierto por los periodos de verano completos
+[8,15,22,29].forEach(d=>vv(2027,9,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+// asume curso 2027-28 ya iniciado; fecha exacta de inicio aún sin publicar
+[6,13,20,27].forEach(d=>vv(2027,10,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+[3,10,17,24].forEach(d=>vv(2027,11,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+[1,8,15].forEach(d=>vv(2027,12,d,'visita','cole→19:30','Miércoles · desde salida cole → 19:30 · cuidadora'));
+// 22 y 29 dic: pendiente, probablemente dentro de vacaciones de Navidad 2027-28 (calendario escolar curso 27-28 aún sin publicar)
 
 // FINES DE SEMANA ALTERNOS
 // Jun: 6-7, 20-21 sin pernocta 11-13h
@@ -235,6 +262,35 @@ vv(2026,12,13,'visita-pernocta','→Dom 17h','Domingo · entrega 17:00 · cuidad
   vv(2027,1,d,'visita-pernocta','→Dom 17h','Domingo · entrega 17:00 · cuidadora');
 });
 
+// Feb-Dic 2027 · régimen ordinario (sentencia 2ª.A.7) · findes alternos Viernes(salida cole)→Domingo 19:30
+// Cadencia quincenal continuada desde el 23-ene-2027 (confirmado sin permutas); se cuenta también en los tramos suspendidos por vacaciones
+function findePapa27(f,s,d,mf,ms,md){
+  vv(2027,mf,f,'visita-pernocta','cole→','Viernes · desde salida cole · PERNOCTA · cuidadora');
+  vv(2027,ms,s,'visita-pernocta','PERNOCTA','Sábado · PERNOCTA · cuidadora');
+  vv(2027,md,d,'visita-pernocta','→19:30','Domingo · entrega 19:30 · cuidadora');
+}
+findePapa27(5,6,7,2,2,2);
+findePapa27(19,20,21,2,2,2);
+findePapa27(5,6,7,3,3,3);
+// 19-21 mar: suspendido (Semana Santa)
+findePapa27(2,3,4,4,4,4);
+findePapa27(16,17,18,4,4,4);
+findePapa27(30,1,2,4,5,5);
+findePapa27(14,15,16,5,5,5);
+findePapa27(28,29,30,5,5,5);
+findePapa27(11,12,13,6,6,6);
+findePapa27(25,26,27,6,6,6);
+// 9-11 jul, 23-25 jul, 6-8 ago, 20-22 ago: suspendido (verano = periodos completos)
+findePapa27(3,4,5,9,9,9);
+findePapa27(17,18,19,9,9,9);
+findePapa27(1,2,3,10,10,10);
+findePapa27(15,16,17,10,10,10);
+findePapa27(29,30,31,10,10,10);
+findePapa27(12,13,14,11,11,11);
+findePapa27(26,27,28,11,11,11);
+findePapa27(10,11,12,12,12,12);
+// 24-26 dic: pendiente, probablemente dentro de vacaciones de Navidad 2027-28 (calendario escolar curso 27-28 aún sin publicar)
+
 // RENDER
 const MN=['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const NOTES={
@@ -247,8 +303,19 @@ const NOTES={
   '2026-9':'Cole 8-9 sep · 1er Mié=9 · 1er finde=5-6',
   '2026-10':'Festivo 12 oct · finde+Mié',
   '2026-11':'Finde pernocta + Mié',
-  '2026-12':'Navidad ~20 dic · con mamá (periodo 1)',
-  '2027-1':'Con papá hasta 8 ene · finde 9-10 con papá',
+  '2026-12':'Navidad 23 dic · con mamá (periodo 1)',
+  '2027-1':'Con papá hasta 10 ene (periodo 2 + finde 9-10)',
+  '2027-2':'Régimen ordinario desde el 1 feb · findes Vie→Dom + Mié',
+  '2027-3':'Semana Santa 19-29 mar (P1 mamá 19-24 · P2 papá 25-29)',
+  '2027-4':'Régimen ordinario · findes Vie→Dom + Mié',
+  '2027-5':'Régimen ordinario · findes Vie→Dom + Mié',
+  '2027-6':'Fin curso 18 jun · régimen ordinario hasta entonces',
+  '2027-7':'Verano P1 mamá (1-15) · P2 papá (16-31)',
+  '2027-8':'Verano P2 papá (1) · P3 mamá (2-15) · P4 papá (16-31)',
+  '2027-9':'Verano P4 papá hasta el 1 · régimen ordinario resto (inicio curso 27-28 sin confirmar)',
+  '2027-10':'Régimen ordinario · findes Vie→Dom + Mié',
+  '2027-11':'Régimen ordinario · findes Vie→Dom + Mié',
+  '2027-12':'Régimen ordinario hasta ~19 dic · Navidad 27-28 pendiente (calendario escolar curso 27-28 sin publicar)',
 };
 const TS={
   festivo:{bg:'#fca5a5',color:'#7f1d1d'},
@@ -288,7 +355,8 @@ function renderMonth(y,m){
   html+=`</div></div>`;return html;
 }
 const container=document.getElementById('months');
-const MONTHS=[[2026,3],[2026,4],[2026,5],[2026,6],[2026,7],[2026,8],[2026,9],[2026,10],[2026,11],[2026,12],[2027,1]];
+const MONTHS=[[2026,3],[2026,4],[2026,5],[2026,6],[2026,7],[2026,8],[2026,9],[2026,10],[2026,11],[2026,12],[2027,1],
+  [2027,2],[2027,3],[2027,4],[2027,5],[2027,6],[2027,7],[2027,8],[2027,9],[2027,10],[2027,11],[2027,12]];
 container.innerHTML=MONTHS.map(([y,m])=>renderMonth(y,m)).join('');
 
 // ═══════ MILESTONES ═══════
@@ -374,13 +442,31 @@ if(roadmapEl){
       {date:'Miércoles',detail:'Desde salida cole → 19:30 · ⚠ Sep 2 NO tiene visita (cole abre 8-9 sep) · 1er Mié: 9 sep',badge:'INTERSEMANAL',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
       {date:'Sáb-Dom alternos',detail:'Sábado 11:00 → Domingo 17:00 · PERNOCTA · 1er finde: 5-6 sep · cuidadora',badge:'CON PERNOCTA',bg:'#dbeafe',bc:'#93c5fd',bb:'#1d4ed8'},
     ]},
-    {start:[2026,12,20],end:[2027,1,8],ph:'Navidad 2026-2027 · Madre elige (año par 2026)',rows:[
-      {date:'~20 dic → 31 dic 12h',detail:'Periodo 1 — con mamá · visitas intersemanal y fines de semana suspendidos',badge:'CON MAMÁ',bg:'#fef9c3',bc:'#fde68a',bb:'#d97706'},
-      {date:'31 dic 12h → ~7 ene',detail:'Periodo 2 — con papá · cuidadora recoge el 31 dic a las 12:00 · incluye el 8 ene si cole abre ese día · finde 9-10 ene con papá',badge:'CON PAPÁ',bg:'#f0fdf4',bc:'#1d4ed8',bb:'#1d4ed8'},
+    {start:[2026,12,23],end:[2027,1,10],ph:'Navidad 2026-2027 · Madre elige (año par 2026)',rows:[
+      {date:'23 dic → 31 dic 12h',detail:'Periodo 1 — con mamá · visitas intersemanal y fines de semana suspendidos',badge:'CON MAMÁ',bg:'#fef9c3',bc:'#fde68a',bb:'#d97706'},
+      {date:'31 dic 12h → 10 ene',detail:'Periodo 2 — con papá · cuidadora recoge el 31 dic a las 12:00 · incluye el finde 9-10 ene · vuelta al cole 11 ene',badge:'CON PAPÁ',bg:'#f0fdf4',bc:'#1d4ed8',bb:'#1d4ed8'},
     ]},
-    {start:[2027,2,1],end:[2027,12,31],ph:'Feb 2027 · Nuevo régimen ordinario',rows:[
+    {start:[2027,2,1],end:[2027,3,18],ph:'Feb 2027 · Nuevo régimen ordinario',rows:[
       {date:'Vie (salida cole) → Dom 19:30',detail:'Fines de semana alternos · cuidadora entrega a las 19:30 el domingo',badge:'NUEVO RÉGIMEN',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
       {date:'Miércoles',detail:'Desde salida cole → 19:30 · cuidadora lleva a domicilio materno',badge:'INTERSEMANAL',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+    ]},
+    {start:[2027,3,19],end:[2027,3,29],ph:'Semana Santa 2027 · Madre elige (medidas cautelares vigentes)',rows:[
+      {date:'19 → 24 mar 12h',detail:'Periodo 1 — con mamá',badge:'CON MAMÁ',bg:'#fef9c3',bc:'#fde68a',bb:'#d97706'},
+      {date:'24 mar 12h → 29 mar',detail:'Periodo 2 — con papá',badge:'CON PAPÁ',bg:'#f0fdf4',bc:'#1d4ed8',bb:'#1d4ed8'},
+    ]},
+    {start:[2027,3,30],end:[2027,6,30],ph:'Mar 30 – Jun 2027 · Régimen ordinario',rows:[
+      {date:'Vie (salida cole) → Dom 19:30',detail:'Fines de semana alternos',badge:'NUEVO RÉGIMEN',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+      {date:'Miércoles',detail:'Desde salida cole → 19:30',badge:'INTERSEMANAL',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+    ]},
+    {start:[2027,7,1],end:[2027,9,1],ph:'Verano 2027 · 4 periodos quincenales · Madre elige 1º y 3º (medidas cautelares vigentes)',rows:[
+      {date:'1 → 15 jul 12h',detail:'Periodo 1 — con mamá',badge:'CON MAMÁ',bg:'#fef9c3',bc:'#fde68a',bb:'#d97706'},
+      {date:'15 jul 12h → 1 ago 12h',detail:'Periodo 2 — con papá',badge:'CON PAPÁ',bg:'#f0fdf4',bc:'#1d4ed8',bb:'#1d4ed8'},
+      {date:'1 → 15 ago 12h',detail:'Periodo 3 — con mamá',badge:'CON MAMÁ',bg:'#fef9c3',bc:'#fde68a',bb:'#d97706'},
+      {date:'15 ago 12h → 1 sep 12h',detail:'Periodo 4 — con papá',badge:'CON PAPÁ',bg:'#f0fdf4',bc:'#1d4ed8',bb:'#1d4ed8'},
+    ]},
+    {start:[2027,9,2],end:[2027,12,31],ph:'Sep – Dic 2027 · Régimen ordinario (Navidad 27-28 pendiente confirmar)',rows:[
+      {date:'Vie (salida cole) → Dom 19:30',detail:'Fines de semana alternos',badge:'NUEVO RÉGIMEN',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
+      {date:'Miércoles',detail:'Desde salida cole → 19:30',badge:'INTERSEMANAL',bg:'#f0fdf4',bc:'#bbf7d0',bb:'#22c55e'},
     ]},
   ];
   let html='';
