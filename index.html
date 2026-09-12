@@ -7,6 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
+html,body{overflow-x:hidden;max-width:100%;}
 body{font-family:'DM Sans',sans-serif;background:#f8fafc;color:#0f172a;padding:28px 16px 60px;}
 .page{max-width:1120px;margin:0 auto;}
 header{margin-bottom:24px;padding-bottom:18px;border-bottom:2px solid #e2e8f0;}
@@ -25,7 +26,7 @@ h1{font-family:'DM Serif Display',serif;font-size:28px;letter-spacing:-.5px;}
 .dow{text-align:center;font-size:9.5px;font-weight:700;letter-spacing:1px;color:#94a3b8;padding-bottom:6px;}
 .dow.we{color:#cbd5e1;}
 .day{position:relative;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:7px;font-size:12px;font-weight:500;cursor:default;transition:transform .12s;}
-.day:hover{transform:scale(1.12);z-index:5;}
+@media (hover:hover) and (pointer:fine){.day:hover{transform:scale(1.12);z-index:5;}}
 .day-num{line-height:1;font-size:12px;}
 .day-sched{font-size:6.8px;font-weight:700;line-height:1;margin-top:2px;opacity:.85;letter-spacing:-.2px;text-align:center;}
 .day-who{font-size:6.5px;font-weight:800;line-height:1;margin-top:1px;letter-spacing:.3px;}
