@@ -1,0 +1,5 @@
+# La fuente con los datos reales NUNCA se sube: solo vive en tu Mac.
+fuente/
+
+node_modules/
+.DS_Store
