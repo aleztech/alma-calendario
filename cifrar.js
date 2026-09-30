@@ -5,7 +5,7 @@
  * El HTML resultante solo contiene datos cifrados con AES-256-GCM.
  * Sin la contraseña no hay nada legible, ni siquiera viendo el codigo fuente.
  *
- *   node cifrar.js              -> pide las dos contrasenas y genera index.html
+ *   node cifrar.js              -> pide la contrasena y genera index.html
  *   node cifrar.js --extraer    -> recupera fuente/calendario.html desde index.html
  *
  * Las contrasenas no se guardan en ningun fichero.
@@ -107,7 +107,7 @@ function limpiarMarcas(texto) {
 
 // ──────────────────────── plantilla publica ───────────────────────
 
-function plantilla(blobCompleto, blobCalendario) {
+function plantilla(...blobs) {
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -153,8 +153,7 @@ body{font-family:'DM Sans',sans-serif;background:#f8fafc;color:#0f172a;}
 // Los datos viajan cifrados con AES-256-GCM. La clave se deriva de la contrasena
 // con PBKDF2-SHA256 (${ITER} iteraciones). Sin contrasena esto es ruido.
 const BLOBS=[
-  ${JSON.stringify(blobCompleto)},
-  ${JSON.stringify(blobCalendario)}
+  ${blobs.map(b => JSON.stringify(b)).join(',\n  ')}
 ];
 const ITER=${ITER};
 
@@ -245,24 +244,16 @@ async function construir() {
   const markup = trocear(fuente, 'markup');
   const js = trocear(fuente, 'script');
 
-  console.log('\nContrasenas nuevas (no se guardan en ningun sitio).');
+  console.log('\nContrasena (no se guarda en ningun sitio).');
   console.log('Usa frases largas. Cuanto mas corta, mas facil de romper por fuerza bruta.\n');
-  const clavePapa = await preguntar('  Tu contrasena (lo ves todo)      : ', true);
-  const claveMadre = await preguntar('  Contrasena de la madre (calendario): ', true);
+  const clave = await preguntar('  Contrasena: ', true);
 
-  if (!clavePapa || !claveMadre) { console.error('\nContrasena vacia. Cancelado.'); process.exit(1); }
-  if (clavePapa === claveMadre) { console.error('\nTienen que ser distintas. Cancelado.'); process.exit(1); }
-  for (const [nombre, c] of [['tuya', clavePapa], ['de la madre', claveMadre]]) {
-    if (c.length < 10) { console.error('\nLa contrasena ' + nombre + ' tiene menos de 10 caracteres. Cancelado.'); process.exit(1); }
-  }
+  if (!clave) { console.error('\nContrasena vacia. Cancelado.'); process.exit(1); }
+  if (clave.length < 10) { console.error('\nLa contrasena tiene menos de 10 caracteres. Cancelado.'); process.exit(1); }
 
   const completo = { css: limpiarMarcas(css), markup: limpiarMarcas(markup), js: limpiarMarcas(js) };
-  const soloCalendario = { css: limpiarMarcas(css), markup: quitarPrivado(markup), js: quitarPrivado(js) };
 
-  fs.writeFileSync(SALIDA, plantilla(
-    cifrar(JSON.stringify(completo), clavePapa),
-    cifrar(JSON.stringify(soloCalendario), claveMadre)
-  ));
+  fs.writeFileSync(SALIDA, plantilla(cifrar(JSON.stringify(completo), clave)));
 
   console.log('\nindex.html generado (' + Math.round(fs.statSync(SALIDA).size / 1024) + ' KB).');
   if (!verificar()) process.exit(1);

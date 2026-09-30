@@ -5,10 +5,8 @@ el navegador con la contraseña; quien abra el código fuente sin ella no ve nad
 
 - Cifrado: AES-256-GCM
 - Clave derivada con PBKDF2-SHA256, 310.000 iteraciones y sal aleatoria por copia
-- Hay dos contraseñas y dan acceso a cosas distintas:
-  - la **completa** → calendario + hitos + hoja de ruta
-  - la **reducida** → solo el calendario (los bloques privados ni siquiera
-    existen en esa copia, no están ocultos: no se descargan)
+- Una sola contraseña, que da acceso a todo: calendario + hitos + hoja de ruta.
+  (El acceso reducido de solo calendario se eliminó.)
 
 ## Cambiar el calendario
 
@@ -19,7 +17,7 @@ el navegador con la contraseña; quien abra el código fuente sin ella no ve nad
    node cifrar.js
    ```
 
-   Te pedirá las dos contraseñas. No se guardan en ningún sitio.
+   Te pedirá la contraseña. No se guarda en ningún sitio.
 
    Al terminar comprueba solo el fichero generado contra
    `fuente/palabras-prohibidas.txt` y aborta si algo ha quedado legible.
@@ -33,7 +31,8 @@ el navegador con la contraseña; quien abra el código fuente sin ella no ve nad
 
 ## Marcar lo que es privado
 
-Lo que quede entre estos marcadores desaparece de la copia reducida:
+Ya no hay copia reducida, así que estos marcadores no tienen efecto (se borran al
+cifrar). Se conservan por si algún día vuelve a hacer falta un acceso limitado:
 
 | Dónde  | Apertura            | Cierre               |
 |--------|---------------------|----------------------|
